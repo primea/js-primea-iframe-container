@@ -28,5 +28,5 @@ node.on('ready', async () => {
   console.log(stateRoot)
   console.log('--------full state dump---------')
   await hypervisor.graph.tree(stateRoot, Infinity)
-  console.log(JSON.stringify(stateRoot, null, 2))
+  // console.log(JSON.stringify(stateRoot, null, 2))
 })
