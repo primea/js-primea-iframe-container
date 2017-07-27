@@ -1,0 +1,30 @@
+{
+  "name": "primea-iframe-container",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "node --expose-wasm --harmony ./node_modules/istanbul/lib/cli.js cover ./tests/index.js",
+    "coveralls": "npm run coverage && coveralls <coverage/lcov.info",
+    "lint": "standard",
+    "test": "node --expose-wasm --harmony ./tests/index.js"
+  },
+  "author": "mjbecze <mjbecze@gmail.com>",
+  "license": "MPL-2.0",
+  "keywords": [
+    "primea"
+  ],
+  "devDependencies": {
+    "ipfs": "^0.24.1",
+    "istanbul": "^1.1.0-alpha.1",
+    "primea-hypervisor": "0.0.2",
+    "standard": "^10.0.0",
+    "tape": "^4.6.3"
+  },
+  "dependencies": {
+    "create-iframe": "^1.0.1",
+    "dnode": "^1.2.2",
+    "primea-message": "0.0.1",
+    "reference-map": "0.0.0"
+  }
+}
