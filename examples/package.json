@@ -1,0 +1,13 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify childContainer.js > childContainer.bundle.js && browserify rootContainer.js -t brfs > rootContainer.bundle.js && browserify -t brfs index.js > out.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  }
+}
