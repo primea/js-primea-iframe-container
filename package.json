@@ -24,6 +24,7 @@
   "dependencies": {
     "create-iframe": "^1.0.1",
     "dnode": "^1.2.2",
+    "iframe-stream": "^3.0.0",
     "primea-message": "0.0.1",
     "reference-map": "0.0.0"
   }

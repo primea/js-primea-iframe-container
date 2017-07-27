@@ -4,6 +4,7 @@ const IframeContainer = require('../')
 const Message = require('primea-message')
 const fs = require('fs')
 
+// load the content of the iframe
 const content = fs.readFileSync(__dirname + '/rootContainer.bundle.js').toString()
 
 const node = new IPFS({
@@ -12,21 +13,22 @@ const node = new IPFS({
 
 // wait untill the ipfs node is ready
 node.on('ready', async () => {
-  // create a new hypervisor instance
-  const hypervisor = new Hypervisor(node.dag)
+  const sr = JSON.parse(localStorage.getItem('sr'))
+  const hypervisor = new Hypervisor(node.dag, sr || {})
   hypervisor.registerContainer('iframe', IframeContainer)
 
-  // create a root instance of the example container
-  const root = await hypervisor.createInstance('iframe', new Message({
-    data: content
-  }))
+  if (!sr) {
+    await hypervisor.createInstance('iframe', new Message({
+      data: content
+    }))
+  } else {
+    await hypervisor.getInstance(hypervisor.ROOT_ID)
+  }
 
-  window.state = hypervisor.state
-  console.log(hypervisor.state)
   const stateRoot = await hypervisor.createStateRoot(0)
-  console.log('create state')
-  console.log(stateRoot)
+  console.log('create state', stateRoot)
+  localStorage.setItem('sr', JSON.stringify(stateRoot))
   console.log('--------full state dump---------')
   await hypervisor.graph.tree(stateRoot, Infinity)
-  // console.log(JSON.stringify(stateRoot, null, 2))
+  console.log(stateRoot)
 })

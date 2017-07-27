@@ -9,5 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "brfs": "^1.4.3"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0"
   }
 }

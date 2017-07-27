@@ -10,9 +10,9 @@ module.exports = class IframeContainer {
     this._refs = new ReferenceMap()
   }
 
-  _setUpIframe () {
+  startup () {
     if (!this._iframeInit) {
-      const code = this.kernel.state.code
+      const code = this.kernel.code
       if (code) {
         let res
         const self = this
@@ -84,14 +84,13 @@ module.exports = class IframeContainer {
   }
 
   async initialize (message) {
-    this.kernel.state.code = message.data
     delete message._opts.data
+    await this.startup()
     return this.run(message, 'initialize')
   }
 
   // the function is called for each message that a container gets
   async run (message, method = 'main') {
-    await this._setUpIframe()
     const json = Object.assign({}, message.toJSON())
     json.msgRef = this._refs.add(message)
     json.ports = message.ports.map(port => this._refs.add(port))
