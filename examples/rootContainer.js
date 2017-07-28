@@ -4,7 +4,8 @@ const RPC = require('../rpc.js')
 const childcontent = fs.readFileSync(__dirname + '/childContainer.bundle.js').toString()
 
 const rpc = new RPC({
-  initialize: async function (message, cb) {
+  onCreation: async function (message, cb) {
+    console.log('root create')
     const channelCreationPromise = rpc.createChannel().then(([chanRef1, chanRef2]) => {
       return Promise.all([
         rpc.createMessage('bindPort', [chanRef1]).then(msg => rpc.send(portRef1, msg)),
@@ -27,6 +28,9 @@ const rpc = new RPC({
 
     console.log('done!!!!')
     cb()
+  },
+  onStartup: () => {
+    console.log('root container restarted')
   },
   onMessage: (message, cb) => {
     cb()

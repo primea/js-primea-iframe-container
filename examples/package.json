@@ -9,9 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "brfs": "^1.4.3"
-  },
-  "devDependencies": {
+    "brfs": "^1.4.3",
+    "primea-message": "0.0.2",
     "browserify": "^14.4.0"
   }
 }

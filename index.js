@@ -10,7 +10,7 @@ module.exports = class IframeContainer {
     this._refs = new ReferenceMap()
   }
 
-  startup () {
+  _startup () {
     if (!this._iframeInit) {
       const code = this.kernel.code
       if (code) {
@@ -83,14 +83,25 @@ module.exports = class IframeContainer {
     }
   }
 
-  async initialize (message) {
+  async onStartup () {
+    console.log('start up')
+    await this._startup()
+    if (this.remote.onStartup) {
+      return new Promise((resolve, reject) => {
+        this.remote.onStartup(resolve)
+      })
+    }
+  }
+
+  async onCreation (message) {
     delete message._opts.data
-    await this.startup()
-    return this.run(message, 'initialize')
+    await this._startup()
+    return this.onMessage(message, 'onCreation')
   }
 
   // the function is called for each message that a container gets
-  async run (message, method = 'main') {
+  async onMessage (message, method = 'onMessage') {
+    debugger
     const json = Object.assign({}, message.toJSON())
     json.msgRef = this._refs.add(message)
     json.ports = message.ports.map(port => this._refs.add(port))
